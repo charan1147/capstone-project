@@ -54,7 +54,7 @@ function UserDashboard(){
         <li className="dashboard-item"><Link to="/return-book/:id">Return Book</Link></li>
         <li className="dashboard-item"><Link to="/overdue-books">Overdue Books</Link></li>
         <li className="dashboard-item"><Link to="/change-password">Change Password</Link></li>
-        <li className="dashboard-item"><Link to="/profile">Profile</Link></li>
+        <li className="dashboard-item"><Link to="/user-reservations">View Reservation</Link></li>
       </ul>
     </div>
   );

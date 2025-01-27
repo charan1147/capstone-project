@@ -35,7 +35,6 @@ exports.updateBook = async (req, res) => {
     }
     res.status(200).json({ message: "Book updated successfully", book: updatedBook });
   } catch (error) {
-    console.error('Error updating book:', error.message);
     res.status(500).json({ message: "Error while updating the book", error: error.message });
   }
 };

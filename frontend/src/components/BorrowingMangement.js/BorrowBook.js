@@ -15,19 +15,20 @@ function BorrowBook() {
     setSuccess(null);
 
     try {
-      await axios.post('http://localhost:6001/api/borrowing/borrow', {
+      const token = localStorage.getItem('token');
+       await axios.post('http://localhost:6001/api/borrowing/borrow', {
         bookId,
         userId,
         dueDate
       }, {
-        headers: { 'x-auth-token': localStorage.getItem('token') }
+        headers: { 'x-auth-token': token }
       });
       setSuccess('Book borrowed successfully!');
       setBookId('');
       setUserId('');
       setDueDate('');
     } catch (error) {
-      setError('Failed to borrow book. Please try again.');
+      setError(error.response?.data?.message || 'Failed to borrow book. Please try again.');
     }
   };
 
@@ -74,6 +75,6 @@ function BorrowBook() {
       </form>
     </div>
   );
-};
+}
 
 export default BorrowBook;

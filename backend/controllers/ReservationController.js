@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Reservation = require('../models/Reservation');
 const Book = require('../models/Book');
-const User = require('../models/User');
 const NotificationController = require('../controllers/NotificationController');
 
 const removeReservationFromBook = async (bookId, reservationId) => {
@@ -55,6 +54,15 @@ exports.reserveBook = async (req, res) => {
     res.status(201).json({ message: "Reservation created successfully", reservation });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+exports.getUserReservations = async (req, res) => {
+  try {
+    const reservations = await Reservation.find({ user: req.user.id }).populate('book');
+    res.status(200).json({ reservations });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch reservations', error: error.message });
   }
 };
 

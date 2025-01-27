@@ -21,7 +21,6 @@ function DeleteBookPage() {
         setBooks(response.data.books);
         setError(null);
       } catch (err) {
-        console.error("Error fetching books", err.message);
         setError("Failed to fetch books. Please try again later.");
       } finally {
         setLoading(false);
@@ -45,7 +44,6 @@ function DeleteBookPage() {
       setBooks(books.filter(book => book._id !== id));
       setSuccess("Book deleted successfully!");
     } catch (err) {
-      console.error("Error deleting book:", err.message);
       setError("Failed to delete book. Please try again.");
     } finally {
       setLoading(false);

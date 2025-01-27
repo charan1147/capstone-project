@@ -10,10 +10,8 @@ function AdminDashboard(){
         <li className="dashboard-item"><Link to="/books/update/:id">Update Book</Link></li>
         <li className="dashboard-item"><Link to="/delete-book/:id">Delete Book</Link></li>
         <li className="dashboard-item"><Link to="/change-password">Change Password</Link></li>
-        <li className="dashboard-item"><Link to="/admin-users">Manage Users</Link></li>
         <li className="dashboard-item"><Link to="/view-reservations">View Reservations</Link></li>
         <li className="dashboard-item"><Link to="/overdue-reservations">Overdue Reservations</Link></li>
-        <li className="dashboard-item"><Link to="/profile">Profile</Link></li>
       </ul>
     </div>
   );

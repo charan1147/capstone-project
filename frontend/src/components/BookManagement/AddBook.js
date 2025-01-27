@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import "./AddBook.css"
+
+
 function AddBook() {
   const [formData, setFormData] = useState({
     title: '',
@@ -28,16 +30,14 @@ function AddBook() {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await axios.post('http://localhost:6001/api/books/add', formData, {
+      await axios.post('http://localhost:6001/api/books/add', formData, {
         headers: {
           'x-auth-token': token
         }
       });
       setSuccess('Book added successfully!');
-      console.log('Book added successfully:', response.data);
     } catch (error) {
-      console.error('Error adding book:', error.message);
-      setError('Failed to add book. Please ensure all fields are filled out correctly.');
+      setError('Failed to add book. Please fill all the feilds.');
     }
   };
 

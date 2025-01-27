@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import './ChangePassword.css';
 
-const ChangePassword = () => {
+function ChangePassword(){
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState(null);
@@ -14,11 +14,13 @@ const ChangePassword = () => {
     setSuccess(null);
 
     try {
+      const token = localStorage.getItem('token');
+
       await axios.put('http://localhost:6001/api/users/password', {
         oldPassword,
         newPassword
       }, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'x-auth-token': token }
       });
       setSuccess('Password changed successfully!');
       setOldPassword('');

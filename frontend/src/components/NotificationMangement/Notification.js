@@ -15,7 +15,6 @@ function Notifications(){
         setNotifications(response.data.notifications);
         setError(null); 
       } catch (error) {
-        console.error('Error fetching notifications:', error.message);
         setError('Failed to fetch notifications. Please try again later.');
       } finally {
         setLoading(false);

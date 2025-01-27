@@ -1,64 +1,49 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ViewReservations.css';
+import './ViewReservations.css'
 
-function ViewReservations(){
+function AdminReservations() {
   const [reservations, setReservations] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError("No token found. Please log in again.");
-        setLoading(false);
-        return;
-      }
-      
       try {
+        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:6001/api/reservations', {
-          headers: {
-            'x-auth-token': token
-          }
+          headers: { 'x-auth-token': token }
         });
-        setReservations(response.data.reservations);
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch reservations. Please try again later.");
-      } finally {
-        setLoading(false);
+        console.log('API Response:', response.data); // Log the response
+        // Use the array directly since it is not nested
+        if (Array.isArray(response.data)) {
+          setReservations(response.data);
+        } else {
+          setError('Unexpected response structure');
+        }
+      } catch (error) {
+        console.error('Error fetching reservations:', error.response?.data?.message || error.message);
+        setError(error.response?.data?.message || 'Failed to fetch reservations. Please try again.');
       }
     };
 
     fetchReservations();
   }, []);
 
-  if (loading) {
-    return <div className="spinner">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="alert alert-error">{error}</div>;
-  }
-
   return (
     <div className="container">
-      <h2 className="title">Reservations</h2>
-      {reservations.length === 0 ? (
-        <div>No reservations available.</div>
-      ) : (
-        <ul className="reservation-list">
-          {reservations.map((reservation) => (
-            <li key={reservation._id} className="reservation-item">
-              <span>{reservation.bookTitle} reserved by {reservation.user}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <h2 className="title">All Reservations</h2>
+      {error && <div className="alert alert-error">{error}</div>}
+      <ul className="reservation-list">
+        {reservations.map(reservation => (
+          <li key={reservation._id} className="reservation-item">
+            <div><strong>Book Title:</strong> {reservation.book.title}</div>
+            <div><strong>User Name:</strong> {reservation.user.name}</div>
+            <div><strong>Reservation Date:</strong> {new Date(reservation.dueDate).toLocaleDateString()}</div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
-export default ViewReservations;
+export default AdminReservations;

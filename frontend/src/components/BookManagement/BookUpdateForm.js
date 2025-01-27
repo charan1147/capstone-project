@@ -30,7 +30,6 @@ function BookUpdateForm(){
         setBooks(response.data.books);
         setError(null);
       } catch (err) {
-        console.error("Error fetching books", err.message);
         setError("Failed to fetch books. Please try again later.");
       } finally {
         setLoading(false);
@@ -53,7 +52,6 @@ function BookUpdateForm(){
       setSelectedBookId(id);
       setError(null);
     } catch (err) {
-      console.error("Error fetching book details", err.message);
       setError("Failed to fetch book details. Please try again later.");
     } finally {
       setLoading(false);
@@ -72,12 +70,11 @@ function BookUpdateForm(){
     setSuccess(null);
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.put(`http://localhost:6001/api/books/update/${selectedBookId}`, book, {
+         await axios.put(`http://localhost:6001/api/books/update/${selectedBookId}`, book, {
         headers: {
           'x-auth-token': token
         }
       });
-      console.log("Book updated:", response.data);
       setSuccess("Book updated successfully!");
       setBook({
         title: "",
@@ -89,7 +86,6 @@ function BookUpdateForm(){
       });
       setSelectedBookId(null);
     } catch (err) {
-      console.error("Error updating book:", err.message);
       setError("Failed to update book. Please try again.");
     } finally {
       setLoading(false);
